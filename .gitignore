@@ -4,3 +4,11 @@
 Assignment 1\.iml
 
 out/production/Assignment 1/
+src/tempCodeRunnerFile.java
+.vscode/settings.json
+
+*.class
+
+*.iml
+
+out/production/COSC364-RIP-Routing/router1\.cfg

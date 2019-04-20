@@ -23,7 +23,7 @@ public class ConfigIO {
         File f = new File(file);
         BufferedReader buffer = new BufferedReader(new FileReader(f));
         String readLine;
-
+        try {
         //Iterate over every line
         while ((readLine = buffer.readLine()) != null) {
             //When router-id is found, save it
@@ -51,5 +51,15 @@ public class ConfigIO {
         }
 
         return Arrays.asList(routerId, inputPorts, outputs);
+        } catch (IOException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                buffer.close();
+            } catch (IOException e) { 
+                System.out.println(e);
+            } 
+        }
+        return null;
     }
 }
