@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.net.ServerSocket;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,6 +11,7 @@ public class runner {
     public static void main(String[] args) {
         //get the file from the launch arguments
         String file = null;
+        ArrayList<ServerSocket> inputSockets = new ArrayList<>();
         if (args.length > 0 && (args[0].equals("--file") || args[0].equals("-f"))) {
             file = args[1];
         } else {
@@ -23,8 +26,15 @@ public class runner {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(routerConfig.get(0));
-        System.out.println(routerConfig.get(1));
-        System.out.println(routerConfig.get(2));
+
+        for (int port: (ArrayList<Integer>)routerConfig.get(1)) {
+            try {
+                ServerSocket inputSocket = new ServerSocket(port);
+                inputSockets.add(inputSocket);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
