@@ -2,10 +2,14 @@
     "configurations": [
         {
             "type": "java",
-            "name": "CodeLens (Launch) - runner",
+            "name": "CodeLens (Launch) - Runner",
             "request": "launch",
-            "mainClass": "runner",
-            "projectName": "Assignment 1_618fa53f"
+            "mainClass": "Runner",
+            "projectName": "Assignment 1_618fa53f",
+            "args": [
+                "-f",
+                "router1.cfg"
+            ]
         }
     ]
 }

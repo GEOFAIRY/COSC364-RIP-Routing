@@ -1,30 +1,60 @@
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.Socket;
+import java.net.ServerSocket;
 
-public class SocketRunner implements Runnable {
+public class SocketRunner implements Runnable{
 
-    private Socket clientSocket = null;
+    protected int serverPort;
+    protected ServerSocket serverSocket = null;
+    protected boolean isStopped = false;
+    protected Thread runningThread = null;
 
-    public SocketRunner(Socket clientSocket) {
-            this.clientSocket = clientSocket;
+    public SocketRunner(int port){
+        this.serverPort = port;
+    }
+
+    public void run(){
+        synchronized(this){
+            this.runningThread = Thread.currentThread();
         }
-
-        public void run() {
+        openServerSocket();
+        while(! isStopped()){
+            Socket clientSocket = null;
             try {
-                InputStream input  = clientSocket.getInputStream();
-                OutputStream output = clientSocket.getOutputStream();
-                long time = System.currentTimeMillis();
-
-                //todo >>do something on socket input <<
-
-                output.close();
-                input.close();
-                System.out.println("Request processed: " + time);
+                clientSocket = this.serverSocket.accept();
             } catch (IOException e) {
-                //report exception somewhere.
-                e.printStackTrace();
+                if(isStopped()) {
+                    System.out.println("Server Stopped.") ;
+                    return;
+                }
+                throw new RuntimeException("Error accepting client connection", e);
             }
+            new Thread(
+                new SocketWorker(clientSocket)).start();
+        }
+        System.out.println("Server Stopped.") ;
+    }
+
+
+    private synchronized boolean isStopped() {
+        return this.isStopped;
+    }
+
+    public synchronized void stop(){
+        this.isStopped = true;
+        try {
+            this.serverSocket.close();
+        } catch (IOException e) {
+            throw new RuntimeException("Error closing server", e);
         }
     }
+
+    private void openServerSocket() {
+        try {
+            this.serverSocket = new ServerSocket(this.serverPort);
+        } catch (IOException e) {
+            throw new RuntimeException("Cannot open port "+ serverPort, e);
+        }
+    }
+
+}

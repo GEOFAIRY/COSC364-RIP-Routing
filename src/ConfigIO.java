@@ -14,7 +14,7 @@ public class ConfigIO {
      * @return List a list containing the Integer routerId an array of inputPorts and an array of outputs
      * @throws IOException for when reading a cfg file has an error
      */
-    public static List readConfig(String file) throws IOException {
+    public static List<Object> readConfig(String file) throws IOException {
         //Initialize variables
         Integer routerId = null;
         ArrayList<Integer> inputPorts = new ArrayList<>();

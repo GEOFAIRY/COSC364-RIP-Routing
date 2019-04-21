@@ -1,17 +1,15 @@
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Test class for checking code
  */
-public class runner {
+public  class Runner {
+    private List<Object> routerConfig = null;
 
-    public static void main(String[] args) {
-        //get the file from the launch arguments
+    public void processConfig(Runner runner, String[] args) {
         String file = null;
-        ArrayList<ServerSocket> inputSockets = new ArrayList<>();
         if (args.length > 0 && (args[0].equals("--file") || args[0].equals("-f"))) {
             file = args[1];
         } else {
@@ -19,22 +17,26 @@ public class runner {
             System.exit(0);
         }
 
-        //get the router config from file and output
-        List routerConfig = null;
+        //get the router config from file
         try {
-            routerConfig = ConfigIO.readConfig(file);
+            runner.routerConfig = ConfigIO.readConfig(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-        for (int port: (ArrayList<Integer>)routerConfig.get(1)) {
-            try {
-                ServerSocket inputSocket = new ServerSocket(port);
-                inputSockets.add(inputSocket);
+    public static void main(String[] args) {
+        Runner runner = new Runner();
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        //get the file from the launch arguments
+        runner.processConfig(runner, args);
+
+        ArrayList<SocketRunner> sockets = new ArrayList<>();
+        for (int port: (ArrayList<Integer>)runner.routerConfig.get(1)) {
+            SocketRunner socket = new SocketRunner(port);
+            new Thread(socket).start();
+            sockets.add(socket);
         }
+    
     }
 }
