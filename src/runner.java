@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Test class for checking code
  */
-public  class Runner {
+public class Runner {
     private List<Object> routerConfig = null;
 
     public void processConfig(Runner runner, String[] args) {
@@ -17,7 +17,7 @@ public  class Runner {
             System.exit(0);
         }
 
-        //get the router config from file
+        // get the router config from file
         try {
             runner.routerConfig = ConfigIO.readConfig(file);
         } catch (IOException e) {
@@ -28,15 +28,22 @@ public  class Runner {
     public static void main(String[] args) {
         Runner runner = new Runner();
 
-        //get the file from the launch arguments
+        // get the file from the launch arguments
         runner.processConfig(runner, args);
 
         ArrayList<SocketRunner> sockets = new ArrayList<>();
-        for (int port: (ArrayList<Integer>)runner.routerConfig.get(1)) {
-            SocketRunner socket = new SocketRunner(port);
+        ArrayList<Integer> inputPorts = (ArrayList<Integer>) runner.routerConfig.get(1);
+        SocketRunner socket;
+
+        for (int port : inputPorts) {
+            if (port == inputPorts.get(0)) {
+                socket = new InputSocketRunner(port);
+            } else {
+                socket = new SocketRunner(port);
+            }
             new Thread(socket).start();
             sockets.add(socket);
         }
-    
+
     }
 }
