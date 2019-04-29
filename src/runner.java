@@ -6,7 +6,7 @@ import java.util.List;
  * Test class for checking code
  */
 public class Runner {
-    private List<Object> routerConfig = null;
+    private ConfigIO routerConfig = null;
 
     public void processConfig(Runner runner, String[] args) {
         String file = null;
@@ -19,7 +19,7 @@ public class Runner {
 
         // get the router config from file
         try {
-            runner.routerConfig = ConfigIO.readConfig(file);
+            runner.routerConfig = new ConfigIO(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -32,7 +32,7 @@ public class Runner {
         runner.processConfig(runner, args);
 
         ArrayList<SocketRunner> sockets = new ArrayList<>();
-        ArrayList<Integer> inputPorts = (ArrayList<Integer>) runner.routerConfig.get(1);
+        ArrayList<Integer> inputPorts = runner.routerConfig.inputPorts;
         SocketRunner socket;
 
         for (int port : inputPorts) {

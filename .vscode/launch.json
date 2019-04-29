@@ -2,14 +2,42 @@
     "configurations": [
         {
             "type": "java",
-            "name": "CodeLens (Launch) - Runner",
+            "name": "Router 1",
             "request": "launch",
             "mainClass": "Runner",
-            "projectName": "Assignment 1_618fa53f",
+            "projectName": "COSC364-RIP-Routing_7c9dfac9",
             "args": [
                 "-f",
                 "router1.cfg"
             ]
+        },
+        {
+            "type": "java",
+            "name": "Router 2",
+            "request": "launch",
+            "mainClass": "Runner",
+            "projectName": "COSC364-RIP-Routing_7c9dfac9",
+            "args": [
+                "-f",
+                "router2.cfg"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "Router 3",
+            "request": "launch",
+            "mainClass": "Runner",
+            "projectName": "COSC364-RIP-Routing_7c9dfac9",
+            "args": [
+                "-f",
+                "router3.cfg"
+            ]
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Triple Mesh",
+            "configurations": ["Router 1", "Router 2", "Router 3"]
         }
     ]
 }

@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.net.DatagramPacket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
@@ -25,7 +26,7 @@ public class InputSocketRunner extends SocketRunner {
                 clientSocket = this.serverSocket.accept();
                 new Thread(new SocketWorker(clientSocket)).start();
             } catch (SocketTimeoutException e) {
-                System.out.println("BROADCAST HERE");
+                
             } catch (IOException e) {
                 if (isStopped()) {
                     System.out.println("Server Stopped.");

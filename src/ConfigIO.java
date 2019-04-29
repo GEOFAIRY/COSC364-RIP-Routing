@@ -8,19 +8,14 @@ import java.util.List;
  */
 public class ConfigIO {
 
-    /**
-     * Method to read config files and return them as a list
-     * 
-     * @param file String the config file to read
-     * @return List a list containing the Integer routerId an array of inputPorts
-     *         and an array of outputs
-     * @throws IOException for when reading a cfg file has an error
-     */
-    public static List<Object> readConfig(String file) throws IOException {
+    public Integer routerId = null;
+    public ArrayList<Integer> inputPorts = new ArrayList<>();
+    public ArrayList<List<String>> outputs = new ArrayList<>();
+
+    
+    public ConfigIO(String file) throws IOException {
         // Initialize variables
-        Integer routerId = null;
-        ArrayList<Integer> inputPorts = new ArrayList<>();
-        ArrayList<String> outputs = new ArrayList<>();
+        ArrayList<String> listOutputs = new ArrayList<>();
         // Open the file
         File f = new File(file);
         BufferedReader buffer = new BufferedReader(new FileReader(f));
@@ -47,12 +42,15 @@ public class ConfigIO {
                 assert readLine != null;
                 if (readLine.equals("outputs:")) {
                     while ((readLine = buffer.readLine()) != null && !readLine.equals("")) {
-                        outputs.add(readLine);
+                        listOutputs.add(readLine);
                     }
                 }
             }
-
-            return Arrays.asList(routerId, inputPorts, outputs);
+            
+            
+            for (String str: listOutputs) {
+                outputs.add(Arrays.asList(str.split("-")));
+            }
         } catch (IOException e) {
             System.out.println(e);
         } finally {
@@ -62,6 +60,5 @@ public class ConfigIO {
                 System.out.println(e);
             }
         }
-        return null;
     }
 }
