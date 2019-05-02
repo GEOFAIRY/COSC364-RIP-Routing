@@ -1,17 +1,19 @@
-package myrip;
+
+import java.time.LocalTime;
 import java.util.Date;
+import static java.time.temporal.ChronoUnit.SECONDS;
 public class Entry {
 	
 	private int dest;
-	private int first;
+	private int next_hop;
 	private int metric;
-	private long time;
+	private LocalTime time;
 	
 	//CONSTRUCTOR FUNCTION
-	public Entry(int dest, int first, int metric, long t) {
+	public Entry(int dest, int next_hop, int metric, LocalTime t) {
 		super();
 		this.dest = dest;
-		this.first = first;
+		this.next_hop = next_hop;
 		this.metric = metric;
 		this.time = t;
 	}
@@ -23,25 +25,25 @@ public class Entry {
 			
 			//String.valueOf()
 			result +="dest: " + String.valueOf(this.dest) + " ";
-			result +="first: " + String.valueOf(this.first) + " ";
+			result +="next hop: " + String.valueOf(this.next_hop) + " ";
 			result +="metric: " + String.valueOf(this.metric) + " ";
-			result +="time: " + String.valueOf(this.timer()) + " ";
+			result +="time: " + this.time.toString() + " ";
 			
 			return result;
 	}
 	
 	
 	public long timer() {
-		long now = new Date().getTime();
-		return now - this.time;
+		LocalTime now = LocalTime.now();
+		return SECONDS.between(now, this.time);
 	}
 
 	public int getDest() {
 		return dest;
 	}
 
-	public int getFirst() {
-		return first;
+	public int getNextHop() {
+		return next_hop;
 	}
 
 	public int getMetric() {
@@ -52,17 +54,11 @@ public class Entry {
 		this.dest = dest;
 	}
 
-	public void setFirst(int first) {
-		this.first = first;
+	public void setNextHop(int next_hop) {
+		this.next_hop = next_hop;
 	}
 
 	public void setMetric(int metric) {
 		this.metric = metric;
-	}
-	
-
-	public static void main(String [] args) {
-		Entry et = new Entry(1,1,1,new Date().getTime());
-		System.out.println(et);
 	}
 }

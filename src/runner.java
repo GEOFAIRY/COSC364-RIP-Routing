@@ -6,7 +6,15 @@ import java.util.List;
  * Test class for checking code
  */
 public class Runner {
-    private ConfigIO routerConfig = null;
+    public final static String LOCALHOST = "127.0.0.1";
+	public final static int BUFSIZE = 1023;
+	public final static int TIMER = 6;
+	public final static int TIMEROUT = TIMER / 6;
+	public final static int ENTRY_TIMEOUT = TIMER * 6;
+	public final static int GARBAGE = TIMER * 6;
+    public final static int INFINITY = 30;
+    public EntryTable entryTable = new EntryTable();
+    public static ConfigIO routerConfig = null;
 
     public void processConfig(Runner runner, String[] args) {
         String file = null;
@@ -19,7 +27,7 @@ public class Runner {
 
         // get the router config from file
         try {
-            runner.routerConfig = new ConfigIO(file);
+            routerConfig = new ConfigIO(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -32,7 +40,7 @@ public class Runner {
         runner.processConfig(runner, args);
 
         ArrayList<SocketRunner> sockets = new ArrayList<>();
-        ArrayList<Integer> inputPorts = runner.routerConfig.inputPorts;
+        ArrayList<Integer> inputPorts = routerConfig.inputPorts;
         SocketRunner socket;
 
         for (int port : inputPorts) {
