@@ -4,7 +4,7 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 
 import java.io.Serializable;
 public class Entry implements Serializable{
-	
+	static final long serialVersionUID = 42L;
 	private int dest;
 	private int next_hop;
 	private int metric;

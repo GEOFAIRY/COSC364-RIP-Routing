@@ -2,6 +2,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.Socket;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,9 +25,12 @@ public class SocketWorker implements Runnable {
         InputStream stream;
         try {
             ByteArrayInputStream byteArray = new ByteArrayInputStream(buffer);
+            //byte[] header = Arrays.copyOfRange(buffer, 0, 4);
+            
             ObjectInputStream inputStream = new ObjectInputStream(byteArray);
             try {
                 EntryTable table = (EntryTable) inputStream.readObject();
+                System.out.println(table.toString());
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }

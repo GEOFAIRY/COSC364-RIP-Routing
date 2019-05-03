@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public  class EntryTable implements Serializable {
+	static final long serialVersionUID = 42L;
 	private Map<Integer, Entry> entries;
 
 
