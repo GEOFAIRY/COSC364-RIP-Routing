@@ -1,28 +1,43 @@
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
+import java.net.InetAddress;
 
 public class InputSocketRunner extends SocketRunner {
 
-    public byte[] createPacket() {
-        int command = 2; // command
-        int version = 2; // version (always 2)
-        int zero = 0; // zero bytes
-        int addressFamily = 2; //2 meaning ipv4
-        byte[] ip = Runner.LOCALHOST.getBytes();
+    public DatagramPacket createPacket(List<String> output) {
+        try {
+            int command = 2; // command
+            int version = 2; // version (always 2)
+            int zero = 0; // zero bytes
+            EntryTable tableToSend = Runner.entryTable.duplicateTable();
+            int routerId = Runner.routerConfig.routerId;
 
-        byte[] packetHeader = { (byte) command, (byte) version, (byte) zero, (byte) zero };
-        byte[] packet = null;
-        System.arraycopy(packetHeader, 0, packet, 0, packetHeader.length);
-        for (List<String> outputs : Runner.routerConfig.outputs) {
-            byte[] tempPayload = {};
+            ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(arrayOutputStream);
+            objectOutputStream.writeObject(tableToSend);
+            objectOutputStream.flush();
+            byte[] buffer = arrayOutputStream.toByteArray();
+
+            byte[] header = { (byte) command, (byte) version, (byte) routerId, (byte) zero };
+            System.arraycopy(header, 0, buffer, 0, header.length);
+
+            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, InetAddress.getLocalHost(),
+                    Integer.parseInt(output.get(0)));
+
+            return packet;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-
-        return packet;
     }
 
     public InputSocketRunner(int port) {
@@ -40,12 +55,23 @@ public class InputSocketRunner extends SocketRunner {
             e1.printStackTrace();
         }
         while (!isStopped()) {
-            Socket clientSocket = null;
+            byte[] buffer = new byte[600];
+            DatagramPacket packetReceived = new DatagramPacket(buffer, buffer.length);
             try {
-                clientSocket = this.serverSocket.accept();
-                new Thread(new SocketWorker(clientSocket)).start();
+                this.serverSocket.receive(packetReceived);
+                new Thread(new SocketWorker(packetReceived, serverSocket)).start();
             } catch (SocketTimeoutException e) {
-                createPacket();
+                // send response packets
+                for (List<String> output : Runner.routerConfig.outputs) {
+                    DatagramPacket packet = createPacket(output);
+                    try {
+                        DatagramSocket outputSocket = new DatagramSocket();
+                        outputSocket.send(packet);
+                        outputSocket.close();
+                    } catch (Exception ignored) {
+                        ignored.printStackTrace();
+                    }
+                }
             } catch (IOException e) {
                 if (isStopped()) {
                     System.out.println("Server Stopped.");

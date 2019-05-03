@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class Runner {
 	public final static int ENTRY_TIMEOUT = TIMER * 6;
 	public final static int GARBAGE = TIMER * 6;
     public final static int INFINITY = 30;
-    public EntryTable entryTable = new EntryTable();
+    public static EntryTable entryTable = new EntryTable();
     public static ConfigIO routerConfig = null;
 
     public void processConfig(Runner runner, String[] args) {
@@ -31,6 +32,14 @@ public class Runner {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        Entry self = new Entry(routerConfig.routerId, routerConfig.routerId, 0, LocalTime.now());
+        entryTable.update(self);
+        for(List<String> output: routerConfig.outputs){
+            Entry entry = new Entry(Integer.parseInt(output.get(2)), Integer.parseInt(output.get(2)), Integer.parseInt(output.get(1)), LocalTime.now());
+            entryTable.update(entry);
+        }
+        System.out.println(entryTable.toString());
     }
 
     public static void main(String[] args) {

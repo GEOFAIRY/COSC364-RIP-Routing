@@ -1,8 +1,9 @@
 
 import java.time.LocalTime;
-import java.util.Date;
 import static java.time.temporal.ChronoUnit.SECONDS;
-public class Entry {
+
+import java.io.Serializable;
+public class Entry implements Serializable{
 	
 	private int dest;
 	private int next_hop;

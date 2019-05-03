@@ -1,11 +1,12 @@
 import java.io.IOException;
-import java.net.Socket;
-import java.net.ServerSocket;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+
 
 public class SocketRunner implements Runnable {
 
     protected int serverPort;
-    protected ServerSocket serverSocket = null;
+    protected DatagramSocket serverSocket = null;
     protected boolean isStopped = false;
     protected Thread runningThread = null;
 
@@ -19,9 +20,10 @@ public class SocketRunner implements Runnable {
         }
         openServerSocket();
         while (!isStopped()) {
-            Socket clientSocket = null;
+            byte[] buffer = new byte[600];
+            DatagramPacket packetReceived = new DatagramPacket(buffer, buffer.length);
             try {
-                clientSocket = this.serverSocket.accept();
+                this.serverSocket.receive(packetReceived);
             } catch (IOException e) {
                 if (isStopped()) {
                     System.out.println("Server Stopped.");
@@ -29,7 +31,7 @@ public class SocketRunner implements Runnable {
                 }
                 throw new RuntimeException("Error accepting client connection", e);
             }
-            new Thread(new SocketWorker(clientSocket)).start();
+            new Thread(new SocketWorker(packetReceived, serverSocket)).start();
         }
         System.out.println("Server Stopped.");
     }
@@ -40,16 +42,12 @@ public class SocketRunner implements Runnable {
 
     public synchronized void stop() {
         this.isStopped = true;
-        try {
-            this.serverSocket.close();
-        } catch (IOException e) {
-            throw new RuntimeException("Error closing server", e);
-        }
+        this.serverSocket.close();
     }
 
     protected void openServerSocket() {
         try {
-            this.serverSocket = new ServerSocket(this.serverPort);
+            this.serverSocket = new DatagramSocket(this.serverPort);
         } catch (IOException e) {
             throw new RuntimeException("Cannot open port " + serverPort, e);
         }

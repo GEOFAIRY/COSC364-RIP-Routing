@@ -1,7 +1,8 @@
 
+import java.io.Serializable;
 import java.util.*;
 
-public class EntryTable {
+public  class EntryTable implements Serializable {
 	private Map<Integer, Entry> entries;
 
 
@@ -69,5 +70,13 @@ public class EntryTable {
 		} else {
 			return this.entries.remove(dest);
 		}
+	}
+
+	public EntryTable duplicateTable(){
+		EntryTable clone = new EntryTable();
+		for (Entry entry: getEntries()) {
+			clone.update(entry);
+		}
+		return clone;
 	}
 }
