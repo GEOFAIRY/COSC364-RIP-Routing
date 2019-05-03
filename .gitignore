@@ -12,3 +12,5 @@ src/tempCodeRunnerFile.java
 *.iml
 
 out/production/COSC364-RIP-Routing/router1\.cfg
+
+src/build/
