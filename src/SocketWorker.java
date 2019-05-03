@@ -10,33 +10,17 @@ import java.io.ObjectInputStream;
 
 public class SocketWorker implements Runnable {
 
-    protected DatagramPacket packet = null;
+    protected EntryTable newTable = null;
     protected DatagramSocket socket = null;
 
-    public SocketWorker(DatagramPacket packet, DatagramSocket socket) {
-        this.packet = packet;
+    public SocketWorker(EntryTable newTable, DatagramSocket socket) {
+        this.newTable = newTable;
         this.socket = socket;
     }
 
     public void run() {
         LocalTime now = LocalTime.now();
         System.out.println("REQUEST \ttime: " + now.toString() + " \tport: " + socket.getLocalPort());
-        byte[] buffer = new byte[600];
-        InputStream stream;
-        try {
-            ByteArrayInputStream byteArray = new ByteArrayInputStream(buffer);
-            //byte[] header = Arrays.copyOfRange(buffer, 0, 4);
-            
-            ObjectInputStream inputStream = new ObjectInputStream(byteArray);
-            try {
-                EntryTable table = (EntryTable) inputStream.readObject();
-                System.out.println(table.toString());
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            System.out.println("got");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        System.out.println(newTable.toString());
     }
 }

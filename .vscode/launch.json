@@ -5,7 +5,7 @@
             "name": "Router 1",
             "request": "launch",
             "mainClass": "Runner",
-            "projectName": "COSC364-RIP-Routing_8c10b41a",
+            "projectName": "Assignment 1_618fa53f",
             "args": [
                 "-f",
                 "router1.cfg"
@@ -16,7 +16,7 @@
             "name": "Router 2",
             "request": "launch",
             "mainClass": "Runner",
-            "projectName": "COSC364-RIP-Routing_8c10b41a",
+            "projectName": "Assignment 1_618fa53f",
             "args": [
                 "-f",
                 "router2.cfg"
@@ -27,17 +27,61 @@
             "name": "Router 3",
             "request": "launch",
             "mainClass": "Runner",
-            "projectName": "COSC364-RIP-Routing_8c10b41a",
+            "projectName": "Assignment 1_618fa53f",
             "args": [
                 "-f",
                 "router3.cfg"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "Router 4",
+            "request": "launch",
+            "mainClass": "Runner",
+            "projectName": "Assignment 1_618fa53f",
+            "args": [
+                "-f",
+                "router4.cfg"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "Router 5",
+            "request": "launch",
+            "mainClass": "Runner",
+            "projectName": "Assignment 1_618fa53f",
+            "args": [
+                "-f",
+                "router5.cfg"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "Router 6",
+            "request": "launch",
+            "mainClass": "Runner",
+            "projectName": "Assignment 1_618fa53f",
+            "args": [
+                "-f",
+                "router6.cfg"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "Router 7",
+            "request": "launch",
+            "mainClass": "Runner",
+            "projectName": "Assignment 1_618fa53f",
+            "args": [
+                "-f",
+                "router7.cfg"
             ]
         }
     ],
     "compounds": [
         {
             "name": "Triple Mesh",
-            "configurations": ["Router 1", "Router 2", "Router 3"]
+            "configurations": ["Router 1", "Router 2", "Router 3", "Router 4", "Router 5", "Router 6", "Router 7"]
         }
     ]
 }
