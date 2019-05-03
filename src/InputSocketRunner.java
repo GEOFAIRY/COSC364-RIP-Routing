@@ -63,8 +63,9 @@ public class InputSocketRunner extends SocketRunner {
             byte[] buffer = new byte[600];
             DatagramPacket packetReceived = new DatagramPacket(buffer, buffer.length);
             try {
+                System.out.println("BLOCKING");
                 this.serverSocket.receive(packetReceived);
-                //new Thread(new SocketWorker(packetReceived, serverSocket)).start();
+                new Thread(new SocketWorker(packetReceived, serverSocket)).start();
             } catch (SocketTimeoutException e) {
                 // send response packets
                 for (List<String> output : Runner.routerConfig.outputs) {

@@ -55,6 +55,7 @@ public class Runner {
         for (int port : inputPorts) {
             if (port == inputPorts.get(0)) {
                 socket = new InputSocketRunner(port);
+                System.out.println("Port used for data transmission: " + port);
             } else {
                 socket = new SocketRunner(port);
             }
