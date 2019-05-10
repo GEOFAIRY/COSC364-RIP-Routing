@@ -7,7 +7,7 @@ import java.util.List;
  * Main entry class for program
  */
 public class Runner {
-    final static int INFINITY = 30;
+    final static int INFINITY = 16;
     static EntryTable entryTable;
     static ConfigIO routerConfig = null;
 

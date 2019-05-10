@@ -26,7 +26,7 @@ public class SocketWorker implements Runnable {
      */
     public void run() {
         LocalTime now = LocalTime.now();
-        System.out.println("RECIEVED \tPort: " + socket.getLocalPort() + "\t" + now.toString());
+        //System.out.println("RECIEVED \tPort: " + socket.getLocalPort() + "\t" + now.toString());
 
         Integer nextHop = newTable.getSourceRouter();
 
@@ -64,6 +64,7 @@ public class SocketWorker implements Runnable {
             Runner.entryTable.update(entryToAdd);
         }
 
+        System.out.println("\n Router ID: " + Runner.routerConfig.routerId);
         System.out.println(Runner.entryTable.toString()); //output for user to see
 
     }

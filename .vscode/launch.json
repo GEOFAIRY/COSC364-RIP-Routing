@@ -5,7 +5,7 @@
             "name": "Router 1",
             "request": "launch",
             "mainClass": "Runner",
-            "projectName": "Assignment 1_618fa53f",
+            "projectName": "COSC364-RIP-Routing_8c10b41a",
             "args": [
                 "-f",
                 "router1.cfg"
@@ -16,7 +16,7 @@
             "name": "Router 2",
             "request": "launch",
             "mainClass": "Runner",
-            "projectName": "Assignment 1_618fa53f",
+            "projectName": "COSC364-RIP-Routing_8c10b41a",
             "args": [
                 "-f",
                 "router2.cfg"
@@ -27,7 +27,7 @@
             "name": "Router 3",
             "request": "launch",
             "mainClass": "Runner",
-            "projectName": "Assignment 1_618fa53f",
+            "projectName": "COSC364-RIP-Routing_8c10b41a",
             "args": [
                 "-f",
                 "router3.cfg"
@@ -38,7 +38,7 @@
             "name": "Router 4",
             "request": "launch",
             "mainClass": "Runner",
-            "projectName": "Assignment 1_618fa53f",
+            "projectName": "COSC364-RIP-Routing_8c10b41a",
             "args": [
                 "-f",
                 "router4.cfg"
@@ -49,7 +49,7 @@
             "name": "Router 5",
             "request": "launch",
             "mainClass": "Runner",
-            "projectName": "Assignment 1_618fa53f",
+            "projectName": "COSC364-RIP-Routing_8c10b41a",
             "args": [
                 "-f",
                 "router5.cfg"
@@ -60,7 +60,7 @@
             "name": "Router 6",
             "request": "launch",
             "mainClass": "Runner",
-            "projectName": "Assignment 1_618fa53f",
+            "projectName": "COSC364-RIP-Routing_8c10b41a",
             "args": [
                 "-f",
                 "router6.cfg"
@@ -71,7 +71,7 @@
             "name": "Router 7",
             "request": "launch",
             "mainClass": "Runner",
-            "projectName": "Assignment 1_618fa53f",
+            "projectName": "COSC364-RIP-Routing_8c10b41a",
             "args": [
                 "-f",
                 "router7.cfg"
@@ -80,7 +80,7 @@
     ],
     "compounds": [
         {
-            "name": "Triple Mesh",
+            "name": "Demo network",
             "configurations": ["Router 1", "Router 2", "Router 3", "Router 4", "Router 5", "Router 6", "Router 7"]
         }
     ]

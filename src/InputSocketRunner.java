@@ -35,7 +35,7 @@ public class InputSocketRunner extends SocketRunner {
         Random rand = new Random();
         Timer UpdateTimer = new Timer();
         SendEntryTable sendEntryTable = new SendEntryTable();
-        UpdateTimer.schedule(sendEntryTable, 10000 + rand.nextInt(20000), 10000 + rand.nextInt(20000));
+        UpdateTimer.schedule(sendEntryTable, 10000, 10000);
 
         while (!isStopped()) {
             byte[] buffer = new byte[1000000];

@@ -57,7 +57,7 @@ public class SendEntryTable extends TimerTask {
         for (List<String> output : Runner.routerConfig.outputs) {
             DatagramPacket packet = createPacket(output);
             try {
-                System.out.println("RESPONSE\tRouter id:" + output.get(2) + "\t" + LocalTime.now());
+                //System.out.println("RESPONSE\tRouter id:" + output.get(2) + "\t" + LocalTime.now());
                 DatagramSocket outputSocket = new DatagramSocket();
                 assert packet != null;
                 outputSocket.send(packet);
